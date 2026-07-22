@@ -34,6 +34,42 @@ spec:
       labels:
         app: goadms
     spec:
+      initContainers:
+      - name: migrate
+        image: xujaan/goadms:latest
+        command: ["goose"]
+        args:
+        - "-dir"
+        - "/migrations"
+        - "postgres"
+        - "postgres://$(ADMS_DB_USER):$(ADMS_DB_PASSWORD)@$(ADMS_DB_HOST):$(ADMS_DB_PORT)/$(ADMS_DB_NAME)?sslmode=disable"
+        - "up"
+        env:
+        - name: ADMS_DB_HOST
+          valueFrom:
+            secretKeyRef:
+              name: goadms-db
+              key: host
+        - name: ADMS_DB_PORT
+          valueFrom:
+            secretKeyRef:
+              name: goadms-db
+              key: port
+        - name: ADMS_DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: goadms-db
+              key: username
+        - name: ADMS_DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: goadms-db
+              key: password
+        - name: ADMS_DB_NAME
+          valueFrom:
+            secretKeyRef:
+              name: goadms-db
+              key: name
       containers:
       - name: goadms
         image: xujaan/goadms:latest
