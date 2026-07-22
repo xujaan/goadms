@@ -1,0 +1,11 @@
+/* ADMS Web Dashboard — minimal overrides */
+body { font-size: .875rem; }
+.sidebar { min-height: 100vh; }
+.sidebar .nav-link { font-weight: 500; color: #adb5bd; }
+.sidebar .nav-link.active { color: #fff; }
+.sidebar .nav-link:hover { color: #fff; }
+.device-card { transition: transform .2s; }
+.device-card:hover { transform: translateY(-2px); }
+.status-online { color: #00ff88; }
+.status-offline { color: #ff4444; }
+main { padding-top: 1rem; }
