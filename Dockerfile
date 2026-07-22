@@ -1,5 +1,7 @@
 # Stage 1: Build
-FROM golang:1.24-alpine AS builder
+FROM golang:1.25-alpine AS builder
+
+ENV GOTOOLCHAIN=auto
 
 RUN apk add --no-cache git
 
@@ -15,7 +17,7 @@ RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-s -w" -o /adms ./cmd/adms
 # Stage 2: Minimal runtime
 FROM alpine:3.21
 
-RUN apk add --no-cache ca-certificates tzdata
+RUN apk add --no-cache ca-certificates tzdata wget
 
 ENV TZ=Asia/Jakarta
 
